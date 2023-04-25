@@ -253,6 +253,45 @@ int print_reverse(char *s)
 }
 
 /**
+ * print_rot13_string - Prints the rot13 string.
+ * @str: The string to be printed.
+ *
+ * Return: The number of characters printed.
+*/
+
+int print_rot13_string(char *str)
+{
+    int i, j, count = 0;
+    char *rot13 = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+
+    if (str == NULL)
+        str = "(null)";
+
+    for (i = 0; str[i] != '\0'; i++)
+    {
+        if (str[i] >= 'A' && str[i] <= 'Z')
+        {
+            j = str[i] - 'A';
+            _putchar(rot13[j]);
+            count++;
+        }
+        else if (str[i] >= 'a' && str[i] <= 'z')
+        {
+            j = str[i] - 'a' + 26;
+            _putchar(rot13[j]);
+            count++;
+        }
+        else
+        {
+            _putchar(str[i]);
+            count++;
+        }
+    }
+
+    return (count);
+}
+
+/**
  * rot13 - Encodes a string using rot13.
  * @s: The string to be encoded.
  *
