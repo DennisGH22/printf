@@ -89,7 +89,7 @@ int print_unsigned_number(unsigned int n)
 }
 
 /**
- * print_octal_number - Prints the octal representation of the integer.
+ * print_octal_number - Prints the octal of the integer.
  * @n: The integer to be printed.
  *
  * Return: The number of characters printed.
@@ -121,7 +121,7 @@ int print_octal_number(unsigned int n)
 }
 
 /**
- * print_hex_number - Prints a hexadecimal representation of the integer.
+ * print_hex_number - Prints a hexadecimal of the integer.
  * @n: The integer to be printed.
  * @uppercase: Letters to be printed.
  *
