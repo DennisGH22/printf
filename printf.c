@@ -1,231 +1,45 @@
-#include <stdio.h>
-#include <stdarg.h>
-#include <unistd.h>
 #include "main.h"
-
 /**
- * _putchar - Writes the character c to stdout.
- * @c: The character to print.
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
-*/
-
-int _putchar(char c)
+ * _printf - is a function that selects the correct function to print.
+ * @format: identifier to look for.
+ * Return: the length of the string.
+ */
+int _printf(const char * const format, ...)
 {
-	return (write(1, &c, 1));
-}
+	convert_match m[] = {
+		{"%s", printf_string}, {"%c", printf_char},
+		{"%%", printf_37},
+		{"%i", printf_int}, {"%d", printf_dec}, {"%r", printf_srev},
+		{"%R", printf_rot13}, {"%b", printf_bin}, {"%u", printf_unsigned},
+		{"%o", printf_oct}, {"%x", printf_hex}, {"%X", printf_HEX},
+		{"%S", printf_exclusive_string}, {"%p", printf_pointer}
+	};
 
-/**
- * _puts - Prints a string to stdout.
- * @str: The string to print.
- *
- * Return: The number of characters printed.
-*/
-
-int _puts(char *str)
-{
-	int i;
-
-	for (i = 0; str[i] != '\0'; i++)
-	{
-		_putchar(str[i]);
-	}
-
-	return (i);
-}
-
-/**
- * print_number - Prints an integer.
- * @n: The integer to be printed.
- *
- * Return: The number of digits printed.
-*/
-
-int print_number(int n)
-{
-	unsigned int num;
-	int count = 0;
-
-	if (n < 0)
-	{
-		count += _putchar('-');
-		num = -n;
-	}
-	else
-	{
-		num = n;
-	}
-
-	if (num / 10)
-	{
-		count += print_number(num / 10);
-	}
-
-	count += _putchar((num % 10) + '0');
-
-	return (count);
-}
-
-/**
- * print_unsigned_number - Prints an unsigned integer.
- * @n: The integer to be printed.
- *
- * Return: The number of characters printed.
-*/
-
-int print_unsigned_number(unsigned int n)
-{
-	unsigned int num = n;
-	int count = 0;
-
-	if (num / 10)
-		count += print_unsigned_number(num / 10);
-
-	_putchar(num % 10 + '0');
-	count++;
-
-	return (count);
-}
-
-/**
- * print_octal_number - Prints the octal of the integer.
- * @n: The integer to be printed.
- *
- * Return: The number of characters printed.
-*/
-
-int print_octal_number(unsigned int n)
-{
-	unsigned int num = n;
-	int count = 0, i = 0;
-	char octal[100];
-
-	while (num != 0)
-	{
-		octal[i] = num % 8 + '0';
-		num /= 8;
-		i++;
-	}
-
-	if (i == 0)
-		octal[i++] = '0';
-
-	for (i--; i >= 0; i--)
-	{
-		_putchar(octal[i]);
-		count++;
-	}
-
-	return (count);
-}
-
-/**
- * print_hex_number - Prints a hexadecimal of the integer.
- * @n: The integer to be printed.
- * @uppercase: Letters to be printed.
- *
- * Return: The number of characters printed.
-*/
-
-int print_hex_number(unsigned int n, int uppercase)
-{
-	unsigned int num = n;
-	int count = 0, i = 0, digit;
-	char hex[100], base = uppercase ? 'A' : 'a';
-
-	while (num != 0)
-	{
-		digit = num % 16;
-		if (digit < 10)
-			hex[i] = digit + '0';
-		else
-			hex[i] = digit - 10 + base;
-		num /= 16;
-		i++;
-	}
-
-	if (i == 0)
-		hex[i++] = '0';
-
-	for (i--; i >= 0; i--)
-	{
-		_putchar(hex[i]);
-		count++;
-	}
-
-	return (count);
-}
-
-/**
- * print_address - Prints the address of a pointer.
- * @p: The pointer of address to be printed.
- *
- * Return: The number of characters printed.
-*/
-
-int print_address(void *p)
-{
-	char buffer[20];
-	int len;
-
-	len = snprintf(buffer, 20, "%p", (void *)p);
-	return (write(1, buffer, len));
-}
-
-/**
- * _printf - Produces output according to a format.
- * @format: The character string.
- *
- * Return: The number of characters printed.
-*/
-
-int _printf(const char *format, ...)
-{
 	va_list args;
-	int count = 0;
+	int i = 0, j, len = 0;
 
 	va_start(args, format);
-	while (*format)
+	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
+		return (-1);
+
+Here:
+	while (format[i] != '\0')
 	{
-		if (*format == '%')
+		j = 13;
+		while (j >= 0)
 		{
-			format++;
-			switch (*format)
+			if (m[j].id[0] == format[i] && m[j].id[1] == format[i + 1])
 			{
-				case 'c':
-					count += _putchar(va_arg(args, int));
-					break;
-				case 's':
-					count += _puts(va_arg(args, char *));
-					break;
-				case '%':
-					count += _putchar('%');
-					break;
-				case 'd': case 'i':
-					count += print_number(va_arg(args, int));
-					break;
-				case 'u':
-					count += print_unsigned_number(va_arg(args, unsigned int));
-					break;
-				case 'o':
-					count += print_octal_number(va_arg(args, unsigned int));
-					break;
-				case 'x': case 'X':
-					count += print_hex_number(va_arg(args, unsigned int), *format == 'X');
-					break;
-				case 'p':
-					count += print_address(va_arg(args, void *));
-					break;
-				default:
-					count += _putchar('%') + _putchar(*format);
+				len += m[j].f(args);
+				i = i + 2;
+				goto Here;
 			}
+			j--;
 		}
-		else
-			count += _putchar(*format);
-		format++;
+		_putchar(format[i]);
+		len++;
+		i++;
 	}
 	va_end(args);
-
-	return (count);
+	return (len);
 }
