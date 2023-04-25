@@ -231,6 +231,27 @@ int print_S(char *s)
 }
 
 /**
+ * print_reverse - Prints a string in reverse.
+ * @s: The string printed in reverse.
+ *
+ * Return: The number of characters printed.
+*/
+
+int print_reverse(char *s)
+{
+	int i, len = 0;
+
+	while (s[len])
+		len++;
+
+	for (i = len - 1; i >= 0; i--)
+		_putchar(s[i]);
+
+	return (len);
+}
+
+
+/**
  * _printf - Produces output according to a format.
  * @format: The character string.
  *
@@ -279,6 +300,9 @@ int _printf(const char *format, ...)
                     break;
 				case 'S':
 					count += print_S(va_arg(args, char *));
+					break;
+				case 'r':
+					count += print_reverse(va_arg(args, char *));
 					break;
 				default:
 					count += _putchar('%') + _putchar(*format);
