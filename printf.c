@@ -68,7 +68,7 @@ int print_number(int n)
 }
 
 /**
- * print_unsigned - Prints an unsigned integer.
+ * print_unsigned_number - Prints an unsigned integer.
  * @n: The integer to be printed.
  *
  * Return: The number of characters printed.
@@ -89,7 +89,7 @@ int print_unsigned_number(unsigned int n)
 }
 
 /**
- * print_octal - Prints the octal representation of the integer.
+ * print_octal_number - Prints the octal representation of the integer.
  * @n: The integer to be printed.
  *
  * Return: The number of characters printed.
@@ -121,7 +121,7 @@ int print_octal_number(unsigned int n)
 }
 
 /**
- * print_hex - Prints a hexadecimal representation of the integer.
+ * print_hex_number - Prints a hexadecimal representation of the integer.
  * @n: The integer to be printed.
  * @uppercase: Letters to be printed.
  *
@@ -158,7 +158,7 @@ int print_hex_number(unsigned int n, int uppercase)
 }
 
 /**
- * print_pointer - Prints the address of a pointer.
+ * print_address - Prints the address of a pointer.
  * @p: The pointer of address to be printed.
  *
  * Return: The number of characters printed.
