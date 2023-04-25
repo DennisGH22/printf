@@ -131,12 +131,12 @@ int print_octal_number(unsigned int n)
 int print_hex_number(unsigned int n, int uppercase)
 {
 	unsigned int num = n;
-	int count = 0, i = 0;
+	int count = 0, i = 0, digit;
 	char hex[100], base = uppercase ? 'A' : 'a';
 
 	while (num != 0)
 	{
-		int digit = num % 16;
+		digit = num % 16;
 		if (digit < 10)
 			hex[i] = digit + '0';
 		else
