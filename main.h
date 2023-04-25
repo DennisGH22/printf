@@ -8,5 +8,6 @@ int print_octal_number(unsigned int n);
 int print_hex_number(unsigned int n, int uppercase);
 int print_address(void *p);
 int print_binary(unsigned int n);
+int print_S(char *s);
 int _printf(const char *format, ...);
 #endif
