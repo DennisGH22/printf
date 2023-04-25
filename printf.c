@@ -253,36 +253,7 @@ int print_reverse(char *s)
 }
 
 /**
- * rot13 - Encodes a string using rot13.
- * @s: The string to be encoded.
- *
- * Return: The encoded string.
-*/
-
-char *rot13(char *s)
-{
-	char *rot13Str = s;
-	char *str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-	char *rot = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
-	int i, j;
-
-	for (i = 0; s[i] != '\0'; i++)
-	{
-		for (j = 0; str[j] != '\0'; j++)
-		{
-			if (s[i] == str[j])
-			{
-				rot13Str[i] = rot[j];
-				break;
-			}
-		}
-	}
-
-	return (rot13Str);
-}
-
-/**
- * print_rot13_string - Prints the rot13 string.
+ * print_rot13_string - Prints a rot13-encoded string.
  * @str: The string to be printed.
  *
  * Return: The number of characters printed.
@@ -290,34 +261,29 @@ char *rot13(char *s)
 
 int print_rot13_string(char *str)
 {
-    int i, j, count = 0;
-    char *rot13 = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+	int i, j, count = 0;
+	char in[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char out[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 
-    if (str == NULL)
-        str = "(null)";
+	for (i = 0; str[i]; i++)
+	{
+		for (j = 0; in[j]; j++)
+		{
+			if (str[i] == in[j])
+			{
+				_putchar(out[j]);
+				count++;
+				break;
+			}
+		}
+		if (!in[j])
+		{
+			_putchar(str[i]);
+			count++;
+		}
+	}
 
-    for (i = 0; str[i] != '\0'; i++)
-    {
-        if (str[i] >= 'A' && str[i] <= 'Z')
-        {
-            j = str[i] - 'A';
-            _putchar(rot13[j]);
-            count++;
-        }
-        else if (str[i] >= 'a' && str[i] <= 'z')
-        {
-            j = str[i] - 'a' + 26;
-            _putchar(rot13[j]);
-            count++;
-        }
-        else
-        {
-            _putchar(str[i]);
-            count++;
-        }
-    }
-
-    return (count);
+	return (count);
 }
 
 /**
@@ -374,7 +340,7 @@ int _printf(const char *format, ...)
 					count += print_reverse(va_arg(args, char *));
 					break;
 				case 'R':
-					count += print_rot13_string(rot13(va_arg(args, char *)));
+					count += print_rot13_string(va_arg(args, char *));
 					break;
 				default:
 					count += _putchar('%') + _putchar(*format);
