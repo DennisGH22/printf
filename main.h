@@ -11,5 +11,6 @@ int print_binary(unsigned int n);
 int print_S(char *s);
 int print_reverse(char *s);
 char *rot13(char *s);
+int print_rot13_string(char *str);
 int _printf(const char *format, ...);
 #endif

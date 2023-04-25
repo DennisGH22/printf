@@ -253,6 +253,35 @@ int print_reverse(char *s)
 }
 
 /**
+ * rot13 - Encodes a string using rot13.
+ * @s: The string to be encoded.
+ *
+ * Return: The encoded string.
+*/
+
+char *rot13(char *s)
+{
+	char *rot13Str = s;
+	char *str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char *rot = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+	int i, j;
+
+	for (i = 0; s[i] != '\0'; i++)
+	{
+		for (j = 0; str[j] != '\0'; j++)
+		{
+			if (s[i] == str[j])
+			{
+				rot13Str[i] = rot[j];
+				break;
+			}
+		}
+	}
+
+	return (rot13Str);
+}
+
+/**
  * print_rot13_string - Prints the rot13 string.
  * @str: The string to be printed.
  *
