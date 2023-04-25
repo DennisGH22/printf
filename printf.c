@@ -186,7 +186,6 @@ int _printf(const char *format, ...)
 	int count = 0;
 
 	va_start(args, format);
-
 	while (*format)
 	{
 		if (*format == '%')
@@ -195,20 +194,15 @@ int _printf(const char *format, ...)
 			switch (*format)
 			{
 				case 'c':
-					_putchar(va_arg(args, int));
-					count++;
+					count += _putchar(va_arg(args, int));
 					break;
 				case 's':
 					count += _puts(va_arg(args, char *));
 					break;
 				case '%':
-					_putchar('%');
-					count++;
+					count += _putchar('%');
 					break;
-				case 'd':
-					count += print_number(va_arg(args, int));
-					break;
-				case 'i':
+				case 'd': case 'i':
 					count += print_number(va_arg(args, int));
 					break;
 				case 'u':
@@ -217,26 +211,18 @@ int _printf(const char *format, ...)
 				case 'o':
 					count += print_octal_number(va_arg(args, unsigned int));
 					break;
-				case 'x':
-					count += print_hex_number(va_arg(args, unsigned int), 0);
-					break;
-				case 'X':
-					count += print_hex_number(va_arg(args, unsigned int), 1);
+				case 'x': case 'X':
+					count += print_hex_number(va_arg(args, unsigned int), *format == 'X');
 					break;
 				case 'p':
 					count += print_address(va_arg(args, void *));
 					break;
 				default:
-					_putchar('%');
-					_putchar(*format);
-					count += 2;
+					count += _putchar('%') + _putchar(*format);
 			}
 		}
 		else
-		{
-			_putchar(*format);
-			count++;
-		}
+			count += _putchar(*format);
 		format++;
 	}
 	va_end(args);
