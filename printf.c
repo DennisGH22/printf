@@ -193,6 +193,44 @@ int print_binary(unsigned int n)
 }
 
 /**
+ * print_S - Prints a string.
+ * @s: The string to be printed.
+ *
+ * Return: The number of characters printed.
+*/
+
+int print_S(char *s)
+{
+	int count = 0;
+
+	if (s == NULL)
+		s = "(null)";
+
+	while (*s)
+	{
+		if ((*s > 0 && *s < 32) || *s >= 127)
+		{
+			_putchar('\\');
+			_putchar('x');
+			count += 2;
+			if (*s < 16)
+			{
+				_putchar('0');
+				count++;
+			}
+			count += print_hex_number(*s, 1);
+		}
+		else
+		{
+			_putchar(*s);
+			count++;
+		}
+		s++;
+	}
+	return (count);
+}
+
+/**
  * _printf - Produces output according to a format.
  * @format: The character string.
  *
@@ -239,6 +277,9 @@ int _printf(const char *format, ...)
                 case 'b':
                     count += print_binary(va_arg(args, unsigned int));
                     break;
+				case 'S':
+					count += print_S(va_arg(args, char *));
+					break;
 				default:
 					count += _putchar('%') + _putchar(*format);
 			}
