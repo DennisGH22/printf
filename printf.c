@@ -174,6 +174,25 @@ int print_address(void *p)
 }
 
 /**
+ * print_binary - Converts the integer to binary.
+ * @n: The integer to be printed as binary.
+ *
+ * Return: The number of digits printed.
+*/
+
+int print_binary(unsigned int n)
+{
+    int count = 0;
+
+    if (n > 1)
+        count += print_binary(n >> 1);
+    _putchar((n & 1) + '0');
+    count++;
+
+    return (count);
+}
+
+/**
  * _printf - Produces output according to a format.
  * @format: The character string.
  *
@@ -217,6 +236,9 @@ int _printf(const char *format, ...)
 				case 'p':
 					count += print_address(va_arg(args, void *));
 					break;
+                case 'b':
+                    count += print_binary(va_arg(args, unsigned int));
+                    break;
 				default:
 					count += _putchar('%') + _putchar(*format);
 			}
