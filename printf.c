@@ -43,7 +43,7 @@ int _printf(const char *format, ...)
 					count++;
 					break;
 				case 's':
-					count += _puts(va_arg(args, char *));
+					count += puts(va_arg(args, char *));
 					break;
 				case '%':
 					_putchar('%');
