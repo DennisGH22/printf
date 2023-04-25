@@ -170,6 +170,7 @@ int print_address(void *p)
 	int len;
 
 	len = snprintf(buffer, 20, "%p", (void *)p);
+
 	return (write(1, buffer, len));
 }
 
@@ -227,6 +228,7 @@ int print_S(char *s)
 		}
 		s++;
 	}
+
 	return (count);
 }
 
@@ -250,6 +252,34 @@ int print_reverse(char *s)
 	return (len);
 }
 
+/**
+ * rot13 - Encodes a string using rot13.
+ * @s: The string to be encoded.
+ *
+ * Return: The encoded string.
+*/
+
+char *rot13(char *s)
+{
+	char *rot13Str = s;
+	char *str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char *rot = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+	int i, j;
+
+	for (i = 0; s[i] != '\0'; i++)
+	{
+		for (j = 0; str[j] != '\0'; j++)
+		{
+			if (s[i] == str[j])
+			{
+				rot13Str[i] = rot[j];
+				break;
+			}
+		}
+	}
+
+	return (rot13Str);
+}
 
 /**
  * _printf - Produces output according to a format.
@@ -303,6 +333,9 @@ int _printf(const char *format, ...)
 					break;
 				case 'r':
 					count += print_reverse(va_arg(args, char *));
+					break;
+				case 'R':
+					count += print_rot13_string(rot13(va_arg(args, char *)));
 					break;
 				default:
 					count += _putchar('%') + _putchar(*format);
