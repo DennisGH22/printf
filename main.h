@@ -12,5 +12,4 @@ int print_S(char *s);
 int print_reverse(char *s);
 int print_rot13_string(char *str);
 int _printf(const char *format, ...);
-int print_string(va_list args, char *buffer, int *pos, int flags, int width, int precision);
 #endif
