@@ -42,7 +42,7 @@ int _puts(char *str)
  * Return: The number of digits printed.
 */
 
-int print_number(int n, int is_signed, int flags)
+int print_number(int n)
 {
 	unsigned int num;
 	int count = 0;
@@ -55,10 +55,6 @@ int print_number(int n, int is_signed, int flags)
 	else
 	{
 		num = n;
-		if (flags & 0x02)
-            count += _putchar('+');
-        else if (flags & 0x04)
-            count += _putchar(' ');
 	}
 
 	if (num / 10)
